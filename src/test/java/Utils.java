@@ -12,13 +12,18 @@ public class Utils {
     protected AppiumDriver driver;
 
     @BeforeClass
-    public void setup() throws MalformedURLException {
-        UiAutomator2Options options = new UiAutomator2Options()
-                .setDeviceName("emulator-5554")
-                .setApp("C:\\Users\\shef\\Desktop\\AutoTestsMaven\\untitled1\\src\\test\\resources\\app\\unknown.apk")
-                .setNoReset(true);
+    public void setup() {
+        try {
+            UiAutomator2Options options = new UiAutomator2Options()
+                    .setPlatformName("android")
+                    .setPlatformVersion("16.0")
+                    .setDeviceName("emulator-5554")
+                    .setApp("C:\\Users\\shef\\Desktop\\AutoTestsMaven\\untitled1\\src\\test\\resources\\app\\unknown.apk")
+                    .setNoReset(true);
 
-        driver = new AndroidDriver(new URL("http://127.0.0.1:4723/"), options);
+            driver = new AndroidDriver(new URL("http://127.0.0.1:4723/wd/hub"), options);        } catch (MalformedURLException e) {
+            throw new RuntimeException("Invalid Appium server URL", e);
+        }
     }
 
     @AfterClass
@@ -27,5 +32,4 @@ public class Utils {
             driver.quit();
         }
     }
-
 }
